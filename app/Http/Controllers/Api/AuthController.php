@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -61,11 +62,13 @@ class AuthController extends Controller
 
         // Create a token for the user
         $token = $user->createToken('auth_token')->plainTextToken;
+        $expiration = Carbon::now()->addMinutes(config('sanctum.expiration'));
 
         // Return the user and token
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'expires_at' => $expiration
         ]);
     }
 
@@ -80,9 +83,9 @@ class AuthController extends Controller
     public function refresh(Request $request)
     {
         $user = Auth::user();
-        $token = $user->createToken('API Token')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
         $expiration = now()->addMinutes(config('sanctum.expiration'))->timestamp;
 
-        return response()->json(['token' => $token, 'expiration' => $expiration]);
+        return response()->json(['token' => $token, 'token_type' => 'Bearer', 'expiration' => $expiration]);
     }
 }
