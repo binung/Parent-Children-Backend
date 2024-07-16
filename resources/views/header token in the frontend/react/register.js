@@ -9,7 +9,7 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://your-laravel-url/api/auth/register', {
+            const response = await axios.post('http://localhost:8000/api/auth/register', {
                 name,
                 email,
                 password

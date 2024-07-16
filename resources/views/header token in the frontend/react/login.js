@@ -21,7 +21,7 @@ const Login = () => {
             localStorage.setItem('expires_at', response.data.expires_at);
             setAuthToken(token);
 
-            dispatch(setCurrentUser(decoded));
+            dispatch(setCurrentUser(response.data.user));
 
             console.log(response.data);
         } catch (error) {

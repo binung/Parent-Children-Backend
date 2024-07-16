@@ -5,7 +5,7 @@ const Logout = () => {
     const handleLogout = async () => {
         const token = localStorage.getItem('token');
         try {
-            await axios.post('http://your-laravel-url/api/auth/logout', {}, {
+            await axios.post('http://localhost:8000/api/auth/logout', {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
