@@ -2,7 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 
 const instance = axios.create({
-    baseURL: 'http://your-laravel-url/api',
+    baseURL: 'http://localhost:8000/api/auth',
 });
 
 instance.interceptors.request.use(

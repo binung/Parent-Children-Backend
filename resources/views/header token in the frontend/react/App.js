@@ -2,11 +2,15 @@ import React from 'react';
 import Register from './components/Register';
 import Login from './components/Login';
 import Logout from './components/Logout';
+import setAuthToken from "./setAuthToken";
+
+
+
+const token = localStorage.getItem('token');
+const expiresAt = localStorage.getItem('expires_at');
 
 // Check for token to keep user logged in
-if (localStorage.jwtToken) {
-    // Set auth token header auth
-    const token = localStorage.jwtToken;
+if (token) {
     setAuthToken(token);
     // Decode token and get user info and exp
     const decoded = jwt_decode(token);
@@ -14,7 +18,7 @@ if (localStorage.jwtToken) {
     store.dispatch(setCurrentUser(decoded));
     // Check for expired token
     const currentTime = Date.now() / 1000; // to get in milliseconds
-    if (decoded.exp < currentTime) {
+    if (expiresAt < currentTime) {
       // Logout user
       store.dispatch(logoutUser());
       // Redirect to login

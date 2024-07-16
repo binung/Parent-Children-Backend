@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import setAuthToken from "./setAuthToken";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -18,6 +19,10 @@ const Login = () => {
             setExpiresAt(response.data.expires_at);
             localStorage.setItem('token', response.data.access_token);
             localStorage.setItem('expires_at', response.data.expires_at);
+            setAuthToken(token);
+
+            dispatch(setCurrentUser(decoded));
+
             console.log(response.data);
         } catch (error) {
             console.error(error);
