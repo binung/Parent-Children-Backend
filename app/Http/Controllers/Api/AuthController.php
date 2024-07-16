@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -19,14 +19,18 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required|min:8', 'confirmed', Rules\Password::defaults()],
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        $parent_email = is_null($request->parent_email) ? '' : $request->parent_email;
+        if ($request->email && User::where('email', $request->email)->exists()) {
+            return response()->json(['message' => 'Email already exists'], 422);
+        }
+
+        $parent_email = is_null($request->parent_email) ? null : $request->parent_email;
 
         // Create the user
         $user = User::create([
