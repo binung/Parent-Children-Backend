@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules;
 
 class AuthController extends Controller
 {
@@ -17,28 +18,25 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
+        $parent_email = is_null($request->parent_email) ? '' : $request->parent_email;
+
         // Create the user
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'parent_email' => $parent_email,
+            'role_id' => $request->role_id,
         ]);
 
-        // Create a token for the user
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        // Return the user and token
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ]);
+        return response()->json(['message' => 'User registered successfully!'], 201);
     }
 
     public function login(Request $request)
@@ -77,5 +75,14 @@ class AuthController extends Controller
         Auth::user()->tokens()->delete();
 
         return response()->json(['message' => 'Logged out successfully'], 200);
+    }
+
+    public function refresh(Request $request)
+    {
+        $user = Auth::user();
+        $token = $user->createToken('API Token')->plainTextToken;
+        $expiration = now()->addMinutes(config('sanctum.expiration'))->timestamp;
+
+        return response()->json(['token' => $token, 'expiration' => $expiration]);
     }
 }
