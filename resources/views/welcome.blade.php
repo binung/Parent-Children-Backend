@@ -8,7 +8,7 @@
 </style>
 
 <body>
-    <p>Server successfully connected000.</p>
+    <p>Server successfully connected!</p>
 </body>
 
 </html>
