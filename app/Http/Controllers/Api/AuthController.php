@@ -42,9 +42,13 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        // Check if the input is an email or a name
+        $input = $request->input('identifier');
+        $isEmail = filter_var($input, FILTER_VALIDATE_EMAIL);
+
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email',
+            'identifier' => ['required', 'string', $isEmail ? 'email' : 'max:255'],
             'password' => 'required|string',
         ]);
 
@@ -53,7 +57,8 @@ class AuthController extends Controller
         }
 
         // Attempt to log the user in
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        $credentials = $isEmail ? ['email' => $input, 'password' => $request->password] : ['name' => $input, 'password' => $request->password];
+        if (!Auth::attempt($credentials)) {
             return response()->json(['message' => 'Invalid login credentials'], 401);
         }
 
@@ -69,8 +74,11 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'Bearer',
             'expires_at' => $expiration,
-            'user' => $user
-        ]);
+            'user' => [
+                'id' => $user->id,
+                'name' => $user->name
+            ]
+        ], 200);
     }
 
     public function logout()

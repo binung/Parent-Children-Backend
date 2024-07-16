@@ -1,41 +1,58 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import setAuthToken from "./setAuthToken";
 
-const Login = () => {
-    const [email, setEmail] = useState('');
+const Auth = () => {
+    const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
-    const [token, setToken] = useState('');
-    const [expiresAt, setExpiresAt] = useState('');
+    const [error, setError] = useState('');
+    const [user, setUser] = useState(null);
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
+    const handleRegister = async () => {
         try {
-            const response = await axios.post('http://your-laravel-url/api/auth/login', {
-                email,
+            const response = await axios.post('http://localhost:8000/api/auth/register', {
+                identifier,
                 password
             });
-            setToken(response.data.access_token);
-            setExpiresAt(response.data.expires_at);
+            setUser(response.data.user);
+        } catch (err) {
+            setError(err.response.data.message);
+        }
+    };
+
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/auth/login', {
+                identifier,
+                password
+            });
+            setUser(response.data.user);
+            // Store token in localStorage or state
             localStorage.setItem('token', response.data.access_token);
-            localStorage.setItem('expires_at', response.data.expires_at);
-            setAuthToken(token);
-
-            dispatch(setCurrentUser(response.data.user));
-
-            console.log(response.data);
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
+            setError(err.response.data.message);
         }
     };
 
     return (
-        <form onSubmit={handleLogin}>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-            <button type="submit">Login</button>
-        </form>
+        <div>
+            <input
+                type="text"
+                placeholder="Email or Name"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <button onClick={handleRegister}>Register</button>
+            <button onClick={handleLogin}>Login</button>
+            {error && <p>{error}</p>}
+            {user && <p>Welcome, {user.name}!</p>}
+        </div>
     );
 };
 
-export default Login;
+export default Auth;
