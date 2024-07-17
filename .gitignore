@@ -5,8 +5,6 @@
 /public/storage
 /storage/*.key
 /vendor
-/vendor.zip
-/node_modules.zip
 .env
 .env.backup
 .env.production
