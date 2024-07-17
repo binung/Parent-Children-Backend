@@ -1,8 +1,4 @@
 <IfModule mod_rewrite.c>
-    # <IfModule mime_module>
-    #     AddHandler application/x-httpd-alt-php82 .php
-    # </IfModule>
-
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
