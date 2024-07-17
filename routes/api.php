@@ -11,6 +11,10 @@ Route::prefix('auth')->group(function () {
         Route::post('logout', [ApiAuthController::class, 'logout']);
         Route::post('refresh', [ApiAuthController::class, 'refresh']);
     });
+});
 
-    Route::post('children', [ParentController::class, 'getChildren']);
+Route::prefix('app')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('children', [ParentController::class, 'getChildren']);
+    });
 });
