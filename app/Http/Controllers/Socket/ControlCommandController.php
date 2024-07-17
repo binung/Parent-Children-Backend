@@ -10,8 +10,12 @@ class ControlCommandController extends Controller
 {
     public function blockApp(Request $request)
     {
-        $data = $request->all();
-        event(new BlockAppCommand($data));
+        // Handle block app request from parent
+        $childId = $request->input('childId');
+        $appId = $request->input('appId');
+
+        // Broadcast block command to the child
+        broadcast(new BlockAppCommand($childId, $appId));
         return response()->json(['status' => 'success']);
     }
 }

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Socket\ChildDataController;
+use App\Http\Controllers\Socket\ControlCommandController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,4 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware('auth')->group(function () {
+    Route::post('/api/child-data', [ChildDataController::class, 'store']);
+    Route::post('/api/block-app', [ControlCommandController::class, 'blackApp']);
+});
+
+require __DIR__ . '/auth.php';

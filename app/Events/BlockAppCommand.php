@@ -14,13 +14,15 @@ class BlockAppCommand implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $data;
+    public $childId;
+    public $appId;
     /**
      * Create a new event instance.
      */
-    public function __construct($data)
+    public function __construct($childId, $appId)
     {
-        $this->data = $data;
+        $this->childId = $childId;
+        $this->appId = $appId;
     }
 
     /**
@@ -31,7 +33,12 @@ class BlockAppCommand implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('child' . $this->data['childId']),
+            new PrivateChannel('child' . $this->childId),
         ];
+    }
+
+    public function broadcastWith()
+    {
+        return ['appId' => $this->appId];
     }
 }
