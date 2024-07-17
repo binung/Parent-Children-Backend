@@ -11,13 +11,13 @@ class ParentController extends Controller
 {
     public function getChildren($id)
     {
-        $user = User::find($id);
-        $children = User::where('parent_email', $user->parent_email)->latest()->get();
+        $parent_email = User::where('id', $id)->value('parent_email');
+        $children = User::where('parent_email', $parent_email)->latest()->get();
 
         if ($children) {
             return response()->json([
                 'success' => true,
-                'childrens' => $children
+                'children' => $children
             ], 200);
         } else {
             return response()->json([
