@@ -17,7 +17,7 @@ const ParentApp = () => {
   }, []);
 
   const blockApp = (appId) => {
-    axios.post('http://your-server-url/api/block-app', {
+    axios.post('http://localhost:8000/api/block-app', {
       parentId: 'parent_user_id',
       childId: 'child_user_id',
       appId,
