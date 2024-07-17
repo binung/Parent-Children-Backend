@@ -3,8 +3,8 @@ import { View, Text, Button, FlatList } from 'react-native';
 import axios from 'axios';
 import { Pusher } from '@pusher/pusher-websocket-react-native';
 
-const pusher = new Pusher('your-pusher-key', {
-  cluster: 'your-pusher-cluster',
+const pusher = new Pusher('53bf81f321f9713df1ff', {
+  cluster: 'mt1',
 });
 
 const ParentApp = () => {
