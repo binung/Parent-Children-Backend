@@ -9,11 +9,11 @@ use App\Models\User;
 
 class ParentController extends Controller
 {
-    public function getChildren(Request $request)
+    public function getChildren($id)
     {
-        $parent_email = User::where('id', $request->id)->value('email');
-        $childrens = User::where('parent_email', $parent_email)->latest()->get();
+        $parent_email = User::find($id)->value('email');
+        $datas = User::where('parent_email', $parent_email)->latest()->get();
 
-        return response()->json(['childrens' => $childrens], 200);
+        return response()->json(['datas' => $datas], 200);
     }
 }

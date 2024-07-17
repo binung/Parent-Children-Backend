@@ -15,6 +15,6 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('app')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
-        Route::get('children', [ParentController::class, 'getChildren']);
+        Route::get('children/{id}', [ParentController::class, 'getChildren']);
     });
 });
