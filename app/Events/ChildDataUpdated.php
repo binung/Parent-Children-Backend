@@ -31,13 +31,17 @@ class ChildDataUpdated implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('parent' . $this->data['parentId']),
+            new PrivateChannel('parent.' . $this->data['parentId']),
         ];
         // return new Channel('parent.'.$this->data['parentId']);
     }
 
     public function broadcastWith()
     {
-        return $this->data;
+        return [
+            'childId' => $this->data['childId'],
+            'apps' => $this->data['apps'],
+            'sites' => $this->data['sites'],
+        ];
     }
 }

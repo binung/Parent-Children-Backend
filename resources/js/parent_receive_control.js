@@ -17,7 +17,13 @@ const ParentApp = () => {
   }, []);
 
   const blockApp = (appId) => {
-    axios.post('http://parental.server.app.multiplayertv.io/api/block-app', {
+    // pusher.send_event('client-block-app', {
+    //     parentId: 'parent_user_id',
+    //     childId: 'child_user_id',
+    //     appId,
+    // }, 'private-channel');
+
+    axios.post('http://parental.server.app.multiplayertv.io/api/socket/block-app', {
       parentId: 'parent_user_id',
       childId: 'child_user_id',
       appId,

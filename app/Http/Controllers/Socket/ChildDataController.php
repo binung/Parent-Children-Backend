@@ -12,7 +12,7 @@ class ChildDataController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        ChildData::create($data);
+        // ChildData::create($data);
 
         // Broadcast data to parent
         broadcast(new ChildDataUpdated($data));

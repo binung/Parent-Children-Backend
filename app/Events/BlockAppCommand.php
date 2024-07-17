@@ -33,8 +33,10 @@ class BlockAppCommand implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('child' . $this->childId),
+            new PrivateChannel('child.' . $this->childId),
         ];
+
+        // return new Channel('child'.$this->childId);
     }
 
     public function broadcastWith()

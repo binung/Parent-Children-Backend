@@ -14,7 +14,13 @@ const ChildApp = () => {
       const apps = await getInstalledApps(); // Replace with actual implementation
       const sites = await getVisitedSites(); // Replace with actual implementation
 
-      axios.post('http://parental.server.app.multiplayertv.io/api/child-data', {
+    //   pusher.send_event('client-child-data', {
+    //     childId: 'child_user_id',
+    //     apps,
+    //     sites,
+    //   }, 'private-channel');
+
+      axios.post('http://parental.server.app.multiplayertv.io/api/socket/child-data', {
         childId: 'child_user_id',
         apps,
         sites,
