@@ -3,6 +3,8 @@
 use App\Http\Controllers\Api\AuthController as ApiAuthController;
 use App\Http\Controllers\Api\ChildController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Socket\ChildDataController;
+use App\Http\Controllers\Socket\ControlCommandController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -21,3 +23,6 @@ Route::prefix('app')->group(function () {
         Route::get('user/{id}', [UserController::class, 'getUser']);
     });
 });
+
+Route::post('child-data', [ChildDataController::class, 'store']);
+Route::post('block-app', [ControlCommandController::class, 'blackApp']);
