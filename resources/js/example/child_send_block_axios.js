@@ -12,6 +12,8 @@ const pusher = new Pusher('53bf81f321f9713df1ff', {
 
 
 const ChildApp = () => {
+    // 1. During Initialization or Regular Intervals:** The function can be called in the child app whenever it initializes or at regular intervals (e.g., every few minutes) to send updated data about installed apps and visited sites.
+    // 2. User Action:** It can also be triggered by specific user actions, such as after installing a new app or visiting new sites.
     const sendData = async () => {
         const apps = await getInstalledApps(); // Your implementation
         const sites = await getVisitedSites(); // Your implementation
