@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Models\ChildData;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,7 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ChildDataUpdated implements ShouldBroadcast
+class ClientChildData implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -22,10 +24,13 @@ class ChildDataUpdated implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct($parentId, $childId, $apps, $sites)
+    public function __construct($parentId, $apps, $sites)
     {
+        $user = User::find($this->parentId);
+        $this->childId = User::where('parent_email', $user->email)->value('id');
+        ChildData::create(['child_id' => $this->childId, 'apps' => $this->apps, 'sites' => $this->sites]);
+
         $this->parentId = $parentId;
-        $this->childId = $childId;
         $this->apps = $apps;
         $this->sites = $sites;
     }
@@ -38,6 +43,7 @@ class ChildDataUpdated implements ShouldBroadcast
 
     public function broadcastOn(): array
     {
+
         return [
             new PrivateChannel('parent.' . $this->parentId),
         ];
@@ -47,6 +53,7 @@ class ChildDataUpdated implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
+            'parentId' => $this->parentId,
             'childId' => $this->childId,
             'apps' => $this->apps,
             'sites' => $this->sites,

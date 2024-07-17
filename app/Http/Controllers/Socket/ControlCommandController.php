@@ -11,7 +11,7 @@ class ControlCommandController extends Controller
     public function blockApp(Request $request)
     {
         // Handle block app request from parent
-        $childId = $request->input('childId');
+        $childId = $request->input('parentId');
         $appId = $request->input('appId');
 
         // Broadcast block command to the child
