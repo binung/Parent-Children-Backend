@@ -11,8 +11,9 @@ class ParentController extends Controller
 {
     public function getChildren($id)
     {
-        $parent_email = User::where('id', $id)->value('parent_email');
-        $children = User::where('parent_email', $parent_email)->latest()->get();
+        $user = User::find($id);
+
+        $children = User::where('parent_email', $user->email)->latest()->get();
 
         if ($children) {
             return response()->json([
