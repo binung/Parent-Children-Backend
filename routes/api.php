@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController as ApiAuthController;
-use App\Http\Controllers\Api\ParentController;
+use App\Http\Controllers\Api\ChildController;
+use App\Http\Controllers\Api\UserController;
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [ApiAuthController::class, 'register']);
@@ -15,6 +16,7 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('app')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
-        Route::get('children/{id}', [ParentController::class, 'getChildren']);
+        Route::get('children/{parent_id}', [UserController::class, 'getChildren']);
+        Route::get('user/{id}', [UserController::class, 'getChild']);
     });
 });
