@@ -13,9 +13,9 @@ class ChildDataController extends Controller
 {
     public function store(Request $request)
     {
-        $childId = $request->input('childId');
-        $apps = $request->input('apps');
-        $sites = $request->input('sites');
+        $childId = $request->childId;
+        $apps = $request->apps;
+        $sites = $request->sites;
 
         ChildData::create(['child_id' => $childId, 'apps' => $apps, 'sites' => $sites]);
 

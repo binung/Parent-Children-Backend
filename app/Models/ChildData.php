@@ -9,5 +9,6 @@ class ChildData extends Model
 {
     use HasFactory;
 
+    public $talbe = 'child_data';
     protected $fillable = ['child_id', 'apps', 'sites'];
 }

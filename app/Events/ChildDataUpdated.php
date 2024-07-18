@@ -36,11 +36,11 @@ class ChildDataUpdated implements ShouldBroadcast
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
 
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new PrivateChannel('parent.' . $this->parentId),
-        ];
+        dump($this->parentId);
+
+        return new PrivateChannel('parent.' . $this->parentId);
         // return new Channel('parent.'.$this->parentId);
     }
 
