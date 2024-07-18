@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('history', function (Blueprint $table) {
-            //
+        Schema::create('block_apps', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('child_id');
+            $table->string('app_name');
+            $table->boolean('state');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('history', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('block_apps');
     }
 };
