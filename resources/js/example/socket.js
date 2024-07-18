@@ -13,7 +13,7 @@ const ChildApp = () => {
       const sites = await getVisitedSites(); // Replace with actual implementation
 
       // Send data via WebSocket
-      sendData('child.child_user_id', 'ClientChildData', {
+      sendData('child.child_user_id', 'clent_user_id', {
         childId: 'child_user_id',
         apps,
         sites,

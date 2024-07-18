@@ -9,6 +9,8 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 class ChildDataUpdated implements ShouldBroadcast
 {
@@ -24,6 +26,8 @@ class ChildDataUpdated implements ShouldBroadcast
      */
     public function __construct($parentId, $childId, $apps, $sites)
     {
+        Log::info('Event Construct Request!');
+
         $this->parentId = $parentId;
         $this->childId = $childId;
         $this->apps = $apps;
@@ -38,15 +42,17 @@ class ChildDataUpdated implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        dump($this->parentId);
+        Log::info('broadcastOn request success');
 
-        return new PrivateChannel('parent.' . $this->parentId);
-        // return new Channel('parent.'.$this->parentId);
+        // return new PrivateChannel('parent.' . $this->parentId);
+        // return new Channel('parent.' . $this->parentId);
+        return Broadcast::channel('parent.' . $this->parentId);
     }
 
     public function broadcastWith()
     {
         return [
+            'parentId' => $this->parentId,
             'childId' => $this->childId,
             'apps' => $this->apps,
             'sites' => $this->sites,
@@ -54,11 +60,11 @@ class ChildDataUpdated implements ShouldBroadcast
         ];
     }
 
-    public function broadcastAs()
-    {
-    }
+    // public function broadcastAs()
+    // {
+    // }
 
-    public function broadcastWhen()
-    {
-    }
+    // public function broadcastWhen()
+    // {
+    // }
 }

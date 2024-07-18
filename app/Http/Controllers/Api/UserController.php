@@ -43,4 +43,21 @@ class UserController extends Controller
             ], 404);
         }
     }
+
+    public function getAllUsers()
+    {
+        $user = User::all();
+
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'user' => $user
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data not found'
+            ], 404);
+        }
+    }
 }

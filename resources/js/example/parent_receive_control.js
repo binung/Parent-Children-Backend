@@ -1,23 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Button, FlatList } from 'react-native';
-import Pusher from 'pusher-js/react-native';
+// npm install --save pusher-js laravel-echo
 
-const pusher = new Pusher('53bf81f321f9713df1ff', {
-  cluster: 'mt1',
-  encrypted: true,
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
+import axios from 'axios';
+import Pusher from 'pusher-js';
+import Echo from 'laravel-echo';
+
+const echo = new Echo({
+    broadcaster: 'pusher',
+    key: '53bf81f321f9713df1ff',
+    cluster: 'mt1',
+    forceTLS: true
 });
+
+window.Pusher = Pusher;
 
 const ParentApp = () => {
     const [childData, setChildData] = useState({ apps: [], sites: [] });
 
     useEffect(() => {
-        pusher.subscribe('parent.'+parent_user_id).bind('ChildDataUpdated', (data) => {
+        const parent_user_id = 1;
+        echo.channel(`parent.${parent_user_id}`)
+          .listen('ChildDataUpdated', (data) => {
             setChildData(data);
-        });
+            console.log(data);
+          });
+
+        window.Echo = echo;
+
     }, []);
 
     const blockApp = (appId) => {
-        axios.post('http://parental.server.app.multiplayertv.io/api/socket/block-app', {
+        axios.post('http://parental.server.digirouble.com/api/socket/block-app', {
             childId: 'child_user_id',
             appId,
         });
@@ -25,27 +39,7 @@ const ParentApp = () => {
 
     return (
         <View>
-        <Text>Parent App</Text>
-        <FlatList
-            data={childData.apps}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-            <View>
-                <Text>{item.name}</Text>
-                <Button title="Block" onPress={() => blockApp(item.id)} />
-            </View>
-            )}
-        />
-        <FlatList
-            data={childData.sites}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-            <View>
-                <Text>{item.url}</Text>
-                <Button title="Block" onPress={() => blockApp(item.id)} />
-            </View>
-            )}
-        />
+            <Text>Parent App</Text>
         </View>
     );
 };

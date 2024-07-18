@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Broadcast;
 
 class BlockAppCommand implements ShouldBroadcast
 {
@@ -30,13 +31,11 @@ class BlockAppCommand implements ShouldBroadcast
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new PrivateChannel('child.' . $this->childId),
-        ];
+        // return new PrivateChannel('child.' . $this->childId);
 
-        // return new Channel('child'.$this->childId);
+        return Broadcast::channel('child.' . $this->childId);
     }
 
     public function broadcastWith()

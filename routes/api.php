@@ -13,6 +13,7 @@ Route::prefix('auth')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('logout', [ApiAuthController::class, 'logout']);
         Route::post('refresh', [ApiAuthController::class, 'refresh']);
+        Route::get('user', [UserController::class, 'getAllUsers']);
     });
 });
 
