@@ -11,7 +11,7 @@ const ParentApp = () => {
     const [childData, setChildData] = useState({ apps: [], sites: [] });
 
     useEffect(() => {
-        pusher.subscribe('parent.parent_user_id').bind('ChildDataUpdated', (data) => {
+        pusher.subscribe('parent.'+parent_user_id).bind('ChildDataUpdated', (data) => {
             setChildData(data);
         });
     }, []);

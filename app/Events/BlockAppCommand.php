@@ -41,6 +41,6 @@ class BlockAppCommand implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        return ['appId' => $this->appId];
+        return ['appId' => $this->appId, 'message' => 'Block command received!'];
     }
 }

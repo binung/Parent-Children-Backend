@@ -50,6 +50,15 @@ class ChildDataUpdated implements ShouldBroadcast
             'childId' => $this->childId,
             'apps' => $this->apps,
             'sites' => $this->sites,
+            'message' => 'Updated data received!'
         ];
+    }
+
+    public function broadcastAs()
+    {
+    }
+
+    public function broadcastWhen()
+    {
     }
 }
