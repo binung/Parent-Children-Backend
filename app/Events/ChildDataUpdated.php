@@ -26,8 +26,6 @@ class ChildDataUpdated implements ShouldBroadcast
      */
     public function __construct($parentId, $childId, $apps, $sites)
     {
-        Log::info('Event Construct Request!');
-
         $this->parentId = $parentId;
         $this->childId = $childId;
         $this->apps = $apps;
@@ -45,8 +43,8 @@ class ChildDataUpdated implements ShouldBroadcast
         Log::info('broadcastOn request success');
 
         // return new PrivateChannel('parent.' . $this->parentId);
-        // return new Channel('parent.' . $this->parentId);
-        return Broadcast::channel('parent.' . $this->parentId);
+        return new Channel('parent.' . $this->parentId);
+        // return Broadcast::channel('parent.1');
     }
 
     public function broadcastWith()

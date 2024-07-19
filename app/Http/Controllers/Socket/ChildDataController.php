@@ -25,8 +25,8 @@ class ChildDataController extends Controller
         Log::info('parentId: ' . $parentId);
 
         // Broadcast data to parent
-        broadcast(new ChildDataUpdated($parentId, $childId, $apps, $sites));
-        // ChildDataUpdated::dispatch($parentId, $childId, $apps, $sites);
+        // broadcast(new ChildDataUpdated($parentId, $childId, $apps, $sites));
+        ChildDataUpdated::dispatch($parentId, $childId, $apps, $sites);
 
         return response()->json(['message' => 'Data received and broadcasted successfully']);
     }

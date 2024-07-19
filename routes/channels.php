@@ -8,7 +8,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('parent.{parentId}', function ($user, int $parentId) {
-    return $user->id = $parentId;
+    return true;
 });
 
 Broadcast::channel('child.{childId}', function ($user, $childId) {
