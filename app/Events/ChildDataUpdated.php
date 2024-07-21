@@ -43,8 +43,9 @@ class ChildDataUpdated implements ShouldBroadcast
         Log::info('broadcastOn request success');
 
         // return new PrivateChannel('parent.' . $this->parentId);
-        return [new Channel('parent.' . $this->parentId)];
+        // return [new Channel('parent.' . $this->parentId)];
         // return Broadcast::channel('parent.1');
+        return [new Channel('example-channel')];
     }
 
     public function broadcastWith()
