@@ -24,7 +24,7 @@ class ChildDataUpdated implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
-    public function __construct($parentId, $childId, $apps, $sites)
+    public function __construct($parentId)
     {
         $this->parentId = $parentId;
         // $this->childId = $childId;
