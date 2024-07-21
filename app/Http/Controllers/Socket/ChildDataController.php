@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Log;
 
 class ChildDataController extends Controller
 {
-    public function callPusher($parentId) {
-        ChildDataUpdated::dispatch($parentId);
+    public function callPusher(Request $request) {
+        ChildDataUpdated::dispatch($request->parentId);
         return;
     }
     public function store(Request $request)
