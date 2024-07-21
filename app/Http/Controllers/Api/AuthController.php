@@ -47,6 +47,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // Check if the input is an email or a name
+        print_r("this is a requsets", $request);
+        exit;
         $input = $request->input('email');
         $isEmail = filter_var($input, FILTER_VALIDATE_EMAIL);
 
