@@ -47,12 +47,12 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // Check if the input is an email or a name
-        $input = $request->input('email');
+        $input = $request->input('identifier');
         $isEmail = filter_var($input, FILTER_VALIDATE_EMAIL);
 
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'email' => ['required', 'string', $isEmail ? 'email' : 'max:255'],
+            'identifier' => ['required', 'string', $isEmail ? 'email' : 'max:255'],
             'password' => 'required|string',
         ]);
 
