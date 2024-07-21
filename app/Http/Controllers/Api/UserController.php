@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Socket\ChildDataController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -29,6 +30,9 @@ class UserController extends Controller
 
     public function getUser($id)
     {
+        $controller = new ChildDataController();
+        $request = new Request();
+        $controller->store($request);
         $user = User::find($id);
 
         if ($user) {
