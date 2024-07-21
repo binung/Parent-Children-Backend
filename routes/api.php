@@ -26,7 +26,7 @@ Route::prefix('app')->group(function () {
 
 Route::prefix('socket')->group(function () {
     // Route::middleware('auth:sanctum')->group(function () {
-        Route::post('child-data', [ChildDataController::class, 'store']);
+        Route::post('child-data', [ChildDataController::class, 'callPusher']);
         Route::post('block-app', [ControlCommandController::class, 'blackApp']);
     // });
 });

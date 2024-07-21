@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Log;
 
 class ChildDataController extends Controller
 {
+    public function callPusher($parentId) {
+        ChildDataUpdated::dispatch($parentId);
+        return;
+    }
     public function store(Request $request)
     {
         $childId = $request->childId;

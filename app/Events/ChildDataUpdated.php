@@ -27,9 +27,9 @@ class ChildDataUpdated implements ShouldBroadcast
     public function __construct($parentId, $childId, $apps, $sites)
     {
         $this->parentId = $parentId;
-        $this->childId = $childId;
-        $this->apps = $apps;
-        $this->sites = $sites;
+        // $this->childId = $childId;
+        // $this->apps = $apps;
+        // $this->sites = $sites;
     }
 
     /**
@@ -51,10 +51,10 @@ class ChildDataUpdated implements ShouldBroadcast
     {
         return [
             'parentId' => $this->parentId,
-            'childId' => $this->childId,
-            'apps' => $this->apps,
-            'sites' => $this->sites,
-            'message' => 'Updated data received!'
+            // 'childId' => $this->childId,
+            // 'apps' => $this->apps,
+            // 'sites' => $this->sites,
+            // 'message' => 'Updated data received!'
         ];
     }
 
