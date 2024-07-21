@@ -30,9 +30,7 @@ class UserController extends Controller
 
     public function getUser($id)
     {
-        $controller = new ChildDataController();
-        $request = new Request();
-        $controller->store($request);
+
         $user = User::find($id);
 
         if ($user) {
