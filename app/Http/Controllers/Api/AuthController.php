@@ -56,9 +56,9 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json(["messages" => 'Validate Error'], 422);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(), 422);
+        // }
 
         // Attempt to log the user in
         $credentials = $isEmail ? ['email' => $input, 'password' => $request->password] : ['name' => $input, 'password' => $request->password];
