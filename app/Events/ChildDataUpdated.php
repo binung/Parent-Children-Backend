@@ -17,14 +17,14 @@ class ChildDataUpdated implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $parentId;
-    public $childId;
-    public $apps;
-    public $sites;
+    // public $childId;
+    // public $apps;
+    // public $sites;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($parentId, $childId, $apps, $sites)
+    public function __construct($parentId)
     {
         $this->parentId = $parentId;
         // $this->childId = $childId;

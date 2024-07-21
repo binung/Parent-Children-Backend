@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 class ChildDataController extends Controller
 {
     public function callPusher(Request $request) {
-        // ChildDataUpdated::dispatch($request->parentId);
+        ChildDataUpdated::dispatch($request->parentId);
         return response()->json(['message' => 'Data received and broadcast successfully', "data" => $request->parentId]);
     }
     public function store(Request $request)
