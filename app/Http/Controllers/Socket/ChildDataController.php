@@ -13,7 +13,7 @@ class ChildDataController extends Controller
 {
     public function callPusher(Request $request) {
         ChildDataUpdated::dispatch($request->parentId);
-        return;
+        return response()->json(['message' => 'Data received and broadcast successfully']);
     }
     public function store(Request $request)
     {
