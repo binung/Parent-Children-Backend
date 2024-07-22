@@ -7,8 +7,8 @@ const socketIo = require('socket.io');
 dotenv.config();
 
 const app = express();
-// const server = http.createServer(app);
-// const io = socketIo(server);
+const server = http.createServer(app);
+const io = socketIo(server);
 // Connect to the database
 connectDB;
 
@@ -29,16 +29,21 @@ app.get('/',(req, res) => {
   res.send("welcome node server");
 })
 
-// io.on('connection', (socket) => {
-//   console.log('A user connected');
-//   socket.on('message', (data) => {
-//     console.log("Message received:", data);
-//   });
-//   socket.on('disconnect', () =>{
-//     console.log("User disconnected");
-//   })
-// })
+io.on('connection', (socket) => {
+  console.log('A user connected');
 
+  // Listen for app block events
+  socket.on('block-app', (data) => {
+    console.log('Received block-app event:', data);
+    // Broadcast to all clients or a specific room
+    io.emit('app-blocked', data);
+  });
+
+  // Handle disconnection
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+});
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/app', require('./routes/userRoutes'));
