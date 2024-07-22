@@ -51,18 +51,18 @@ io.on('connection', (socket) => {
   socket.emit('connection-success', { message: 'Successfully connected to server' });
 
   socket.on('block-app', (data) => {
-    const { child_id, avatar, package_name, app_usage_time, state, app_name } = data;
-    const created_at = Date.now();
-    const updated_at = Date.now();
-    const query = 'INSERT INTO block_apps (child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-    db.query(query, [child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time], (err, result) => {
-      if (err) {
+    // const { child_id, avatar, package_name, app_usage_time, state, app_name } = data;
+    // const created_at = Date.now();
+    // const updated_at = Date.now();
+    // const query = 'INSERT INTO block_apps (child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    // db.query(query, [child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time], (err, result) => {
+      // if (err) {
         console.error('Error inserting data:', err);
         socket.emit('block-app-response', { status: 'error', message: 'Error saving app blocking information' });
-      } else {
-        socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
-      }
-    });
+      // } else {
+        // socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
+      // }
+    // });
   });
 
   socket.on('disconnect', () => {
