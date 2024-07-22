@@ -4,6 +4,6 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.post('/block-app/:id', authMiddleware, blockApp)
+router.post('/block-app', authMiddleware, blockApp)
 
 module.exports = router;
