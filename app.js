@@ -32,18 +32,18 @@ app.get('/',(req, res) => {
 })
 
 
-io.use((socket, next) => {
-  const token = socket.handshake.headers['authorization'];
-  if (token) {
-    jwt.verify(token, secretKey, (err, decoded) => {
-      if (err) return next(new Error('Authentication error'));
-      socket.user = decoded;
-      next();
-    });
-  } else {
-    next(new Error('Authentication error'));
-  }
-});
+// io.use((socket, next) => {
+//   const token = socket.handshake.headers['authorization'];
+//   if (token) {
+//     jwt.verify(token, secretKey, (err, decoded) => {
+//       if (err) return next(new Error('Authentication error'));
+//       socket.user = decoded;
+//       next();
+//     });
+//   } else {
+//     next(new Error('Authentication error'));
+//   }
+// });
 
 io.on('connection', (socket) => {
   console.log('A user connected');
