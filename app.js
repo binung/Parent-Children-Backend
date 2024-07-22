@@ -1,12 +1,14 @@
 const express = require('express');
 const cors = require('cors');
+const http = require('http')
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
-const base_url = 'http://parental.server.digirouble.com/'
+const socketIo = require('socket.io');
 dotenv.config();
 
 const app = express();
-
+const server = http.createServer(app);
+const io = socketIo(server);
 // Connect to the database
 connectDB;
 
@@ -26,6 +28,17 @@ app.use(cors(corsOptions));
 app.get('/',(req, res) => {
   res.send("welcome node server");
 })
+
+io.on('connection', (socket) => {
+  console.log('A user connected');
+  socket.on('message', (data) => {
+    console.log("Message received:", data);
+  });
+  socket.on('disconnect', () =>{
+    console.log("User disconnected");
+  })
+})
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/app', require('./routes/userRoutes'));
