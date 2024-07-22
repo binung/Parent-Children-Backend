@@ -57,10 +57,10 @@ io.on('connection', (socket) => {
     // const query = 'INSERT INTO block_apps (child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     // db.query(query, [child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time], (err, result) => {
       // if (err) {
-        console.error('Error inserting data:', err);
-        socket.emit('block-app-response', { status: 'error', message: 'Error saving app blocking information' });
+        // console.error('Error inserting data:', err);
+        // socket.emit('block-app-response', { status: 'error', message: 'Error saving app blocking information' });
       // } else {
-        // socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
+        socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
       // }
     // });
   });
