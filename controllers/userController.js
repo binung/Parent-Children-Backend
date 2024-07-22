@@ -17,7 +17,9 @@ exports.getUser = async (req, res) => {
 exports.getChildren = async (req, res) => {
   try {
     const params = req.params;
+    return res.status(200).json({id:params.id})
     const children = await findChildren(params.id);
+    return res.status(200).json({children});
     if (!children) {
       return res.status(404).json({ msg: 'User not found' });
     }
