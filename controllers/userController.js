@@ -17,12 +17,11 @@ exports.getUser = async (req, res) => {
 exports.getChildren = async (req, res) => {
   try {
     const params = req.params;
-    return res.status(200).json({params: params})
-    const children = await findChildren(params);
+    const children = await findChildren(params.id);
     if (!children) {
       return res.status(404).json({ msg: 'User not found' });
     }
-    res.json(user);
+    res.status(200).json(children);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
