@@ -30,11 +30,24 @@ app.get('/',(req, res) => {
   res.send("welcome to node server");
 })
 
+// io.use((socket, next) => {
+//   const token = socket.handshake.headers['authorization'];
+//   if (token) {
+//     jwt.verify(token, secretKey, (err, decoded) => {
+//       if (err) return next(new Error('Authentication error'));
+//       socket.user = decoded;
+//       next();
+//     });
+//   } else {
+//     next(new Error('Authentication error'));
+//   }
+// });
+
 io.on('connection', (socket) => {
   console.log('A user connected');
 
   // Listen for app block events
-  socket.on('block-app', (data) => {
+  socket.on('app-blocked', (data) => {
     console.log('Received block-app event:', data);
     // Broadcast to all clients or a specific room
     io.emit('app-blocked', data);
@@ -48,6 +61,7 @@ io.on('connection', (socket) => {
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/app', require('./routes/userRoutes'));
+app.use('/api/appUsage', require('./routes/appRoutes'))
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
