@@ -10,7 +10,7 @@ const useWebSocket = () => {
     key: '53bf81f321f9713df1ff',
     cluster: 'mt1',
     encrypted: true,
-    forceTLS: true,
+    forceTLS: true
   });
 
   const sendData = (channel, event, data) => {
