@@ -37,9 +37,9 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
+  const { identifier, password } = req.body;
   try {
-    const user = await findUserByEmail(email);
+    const user = await findUserByEmail(identifier);
     if (!user) {
       return res.status(400).json({ msg: 'Invalid Credentials' });
     }
@@ -51,21 +51,24 @@ exports.login = async (req, res) => {
 
     const payload = {
       user: {
-        id: user.id,
+        'name': user.name,
+        'id': user.id,
       },
     };
 
-    jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: 3600 },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token });
-      }
-    );
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server error');
-  }
+    jwt.sign(  
+      payload,  
+      process.env.JWT_SECRET,  
+      { expiresIn: 3600 },  
+      (err, token) => {  
+        if (err) throw err;  
+  
+        // Send back the token structured as a Bearer token  
+        res.json({ 'access_token': `Bearer ${token}`, 'token_type': 'Bearer', 'user':payload});  
+      }  
+    );  
+  } catch (err) {  
+    console.error(err.message);  
+    res.status(500).send('Server error');  
+  }  
 };
