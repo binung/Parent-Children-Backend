@@ -15,8 +15,14 @@ const findUserById = async (id) => {
   return rows[0];
 };
 
+const findChildren = async (id) => {
+  const [rows] = await db.query('SELECT * FROM users WHERE parent_email = ?', [id]);
+  return rows;
+}
+
 module.exports = {
   createUser,
   findUserByEmail,
   findUserById,
+  findChildren
 };

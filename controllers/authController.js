@@ -64,7 +64,7 @@ exports.login = async (req, res) => {
         if (err) throw err;  
   
         // Send back the token structured as a Bearer token  
-        res.json({ 'access_token': `Bearer ${token}`, 'token_type': 'Bearer', 'user':payload});  
+        res.json({ 'access_token': `Bearer ${token}`, 'token_type': 'Bearer', payload});  
       }  
     );  
   } catch (err) {  
