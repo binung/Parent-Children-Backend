@@ -27,7 +27,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get('/',(req, res) => {
-  res.send("welcome node server");
+  res.send("welcome to node server");
 })
 
 io.on('connection', (socket) => {
