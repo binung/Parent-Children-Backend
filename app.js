@@ -23,6 +23,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.get('/',(req, res) => {
+  res.send("welcome node server");
+})
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
