@@ -16,7 +16,8 @@ const findUserById = async (id) => {
 };
 
 const findChildren = async (id) => {
-  const parent_email = await db.query('SELECT email FROM users WHERE id = ?', [id]);
+  const parentID = Number(id);
+  const parent_email = await db.query('SELECT email FROM users WHERE id = ?', [parentID]);
   const [rows] = await db.query('SELECT * FROM users WHERE parent_email = ?', [parent_email]);
   return parent_email;
 }
