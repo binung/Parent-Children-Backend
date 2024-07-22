@@ -25,19 +25,19 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get('/',(req, res) => {
-  res.send("welcome node server");
-})
+// app.get('/',(req, res) => {
+//   res.send("welcome node server");
+// })
 
-io.on('connection', (socket) => {
-  console.log('A user connected');
-  socket.on('message', (data) => {
-    console.log("Message received:", data);
-  });
-  socket.on('disconnect', () =>{
-    console.log("User disconnected");
-  })
-})
+// io.on('connection', (socket) => {
+//   console.log('A user connected');
+//   socket.on('message', (data) => {
+//     console.log("Message received:", data);
+//   });
+//   socket.on('disconnect', () =>{
+//     console.log("User disconnected");
+//   })
+// })
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
