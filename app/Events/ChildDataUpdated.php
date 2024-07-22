@@ -40,12 +40,12 @@ class ChildDataUpdated implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        Log::info('broadcastOn request success');
+        // Log::info('broadcastOn request success');
 
         // return new PrivateChannel('parent.' . $this->parentId);
         // return [new Channel('parent.' . $this->parentId)];
-        // return Broadcast::channel('parent.1');
-        return [new Channel('example-channel')];
+        return [new Channel('parent.1')];
+        // return [new Channel('example-channel')];
     }
 
     public function broadcastWith()
@@ -59,9 +59,10 @@ class ChildDataUpdated implements ShouldBroadcast
         ];
     }
 
-    // public function broadcastAs()
-    // {
-    // }
+    public function broadcastAs()
+    {
+        return 'example-event';
+    }
 
     // public function broadcastWhen()
     // {
