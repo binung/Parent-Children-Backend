@@ -55,7 +55,7 @@ exports.login = async (req, res) => {
         'id': user.id,
       },
     };
-
+    console.log("Login Successful");
     jwt.sign(  
       payload,  
       process.env.JWT_SECRET,  

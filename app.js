@@ -23,6 +23,7 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 
+
 app.use(cors(corsOptions));
 
 app.get('/',(req, res) => {
