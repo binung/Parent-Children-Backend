@@ -25,9 +25,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// app.get('/',(req, res) => {
-//   res.send("welcome node server");
-// })
+app.get('/',(req, res) => {
+  res.send("welcome node server");
+})
 
 // io.on('connection', (socket) => {
 //   console.log('A user connected');
