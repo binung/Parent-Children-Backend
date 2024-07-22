@@ -4,6 +4,7 @@ const http = require('http')
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const socketIo = require('socket.io');
+const mysql = require('mysql2')
 dotenv.config();
 
 const app = express();
@@ -29,6 +30,21 @@ app.use(cors(corsOptions));
 app.get('/',(req, res) => {
   res.send("welcome to node server");
 })
+
+const db = mysql.createConnection({
+  host: '5.101.173.45',
+  user: 'digiroubl_admin',
+  password: '4NaP^aBA7.Ue',
+  database: 'digiroubl_parental',
+})
+
+db.connect((err) => {
+  if (err) {
+    console.error('Error connecting to MySQL:', err);
+    throw err;
+  }
+  console.log('Connected to MySQL database');
+});
 
 io.use((socket, next) => {
   const token = socket.handshake.headers['authorization'];
