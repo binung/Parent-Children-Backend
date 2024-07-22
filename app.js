@@ -7,8 +7,8 @@ const socketIo = require('socket.io');
 dotenv.config();
 
 const app = express();
-// const server = http.createServer(app);
-// const io = socketIo(server);
+const server = http.createServer(app);
+const io = socketIo(server);
 // Connect to the database
 connectDB;
 
@@ -49,4 +49,4 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/app', require('./routes/userRoutes'));
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
