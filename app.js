@@ -47,7 +47,7 @@ app.get('/',(req, res) => {
 connections. */
 io.use((socket, next) => {  
   // Get the 'Authorization' header  
-  const authHeader = socket.handshake.headers['authorization'];  
+  const authHeader = socket._opts.extraHeaders.Authorization;  
 
   // Ensure the header starts with "Bearer "  
   if (authHeader && authHeader.startsWith('Bearer ')) {  
