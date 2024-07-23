@@ -73,10 +73,9 @@ io.on('connection', (socket) => {
 
   socket.emit('connection-success', { message: 'Successfully connected to server' });
   socket.on('userinfo', (data) => {
-   const token = data.token.split('.')[1];
-   jwt.verify(token, 'your_jwt_secret_key', (err, decoded) => {
-     socket.emit('userinfo', decoded)
-   })
+    const token = data.token.split('.')[1];
+    const decoded = jwt.decode(token)
+    socket.emit('userinfo', decoded)
   })
   socket.on('block-app', (data) => {
     socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
@@ -89,8 +88,8 @@ io.on('connection', (socket) => {
     //   if(err) {
     //     socket.emit('receive-child-data', {status: 'error', message: 'Error saving app'});
     //   } else {
-        socket.emit('receive-child-data', {status: 'success', message:'App blocking info'});
-      // }
+    socket.emit('receive-child-data', { status: 'success', message: 'App blocking info' });
+    // }
     // })
   })
 
