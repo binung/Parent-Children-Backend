@@ -100,7 +100,7 @@ io.on('connection', (socket) => {
     //       console.error('Error inserting data:', err);
     //       socket.emit('block-app-response', { status: 'error', message: 'Error saving app blocking information' });
     //     } else {
-          io.emit('receive-child-data', value.appName);
+          io.emit('receive-child-data', "adfa");
       //   }
       // });
     // })
