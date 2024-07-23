@@ -71,7 +71,9 @@ io.on('connection', (socket) => {
   console.log('A user connected');
 
   socket.emit('connection-success', { message: 'Successfully connected to server' });
-
+  socket.on('userinfo', (data) => {
+    socket.emit('userinfo', data)
+  })
   socket.on('block-app', (data) => {
     socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
     socket.emit('app-blocked', {
