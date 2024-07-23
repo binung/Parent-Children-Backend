@@ -16,7 +16,9 @@ connectDB;
 // Middleware
 app.use(express.json({ extended: false }));
 
-
+const token = 'eyJ1c2VyIjp7Im5hbWUiOiJQYXJlbnQiLCJpZCI6MX0sImlhdCI6MTcyMTc2NjAzMCwiZXhwIjoxNzIxNzY5NjMwfQ';
+  const decoded = jwt.verify(token, process.env.JWT_SECRET)
+  console.log("this is  decode", decoded)
 // Custom CORS middleware  
 
 // CORS options for Express API  
@@ -73,9 +75,9 @@ io.on('connection', (socket) => {
 
   socket.emit('connection-success', { message: 'Successfully connected to server' });
   socket.on('userinfo', (data) => {
-    const token = data.token.split('.')[1];
-    // const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    socket.emit('userinfo', token)
+    const token = data.token.split(' ')[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    socket.emit('userinfo', decoded)
   })
   socket.on('block-app', (data) => {
     socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
