@@ -75,7 +75,7 @@ io.on('connection', (socket) => {
   socket.on('userinfo', (data) => {
     const token = data.token.split('.')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    socket.emit('userinfo', decoded)
+    socket.emit('userinfo', decoded.user)
   })
   socket.on('block-app', (data) => {
     socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
