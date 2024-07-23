@@ -73,7 +73,7 @@ io.on('connection', (socket) => {
 
   socket.emit('connection-success', { message: 'Successfully connected to server' });
   socket.on('userinfo', (data) => {
-   const token = token.split('.')[1];
+   const token = data.token.split('.')[1];
     socket.emit('userinfo', token)
   })
   socket.on('block-app', (data) => {
