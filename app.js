@@ -74,7 +74,7 @@ io.on('connection', (socket) => {
   socket.emit('connection-success', { message: 'Successfully connected to server' });
   socket.on('userinfo', (data) => {
     const token = data.token.split('.')[1];
-    const decoded = jwt.decode(token)
+    const decoded = jwt.verify(token, 'your_jwt_secret_key')
     socket.emit('userinfo', decoded)
   })
   socket.on('block-app', (data) => {
