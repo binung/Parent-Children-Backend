@@ -9,23 +9,34 @@ dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
 // Connect to the database
 connectDB;
 
 // Middleware
 app.use(express.json({ extended: false }));
+ 
 
-// CORS configuration
-const corsOptions = {
-  origin: '*', // Allow all origins
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow specific methods
-  credentials: true, // Allow cookies to be sent with requests
-  optionsSuccessStatus: 204,
-};
+// Custom CORS middleware  
 
+// CORS options for Express API  
+const corsOptions = {  
+  origin:'*',
+  methods: ['GET', 'POST'],  
+  credentials: true,  
+};  
 
-app.use(cors(corsOptions));
+// Use CORS middleware  
+app.use(cors(corsOptions));  
+
+// Initialize Socket.IO with CORS options  
+const io = socketIo(server, {  
+  cors: {  
+      origin: '*',  
+      methods: ['GET', 'POST'],  
+      credentials: true,  
+  },  
+});  
+
 
 app.get('/',(req, res) => {
   res.send("welcome to node server");
