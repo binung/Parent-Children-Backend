@@ -1,16 +1,16 @@
 const db = require('../config/db');
 
-const createApp = async (data) => {
+const saveApp = (data, callback) => {
     const child_id = data.child_id;
-    const app_name = data.app_name;
-    const state = data.state;
-    const package_name = data.package_name;
-    const avatar = data.avatar;
-    const app_usage_time = data.app_usage_time;
+    const app_name = data.appName;
+    const package_name = data.packageName;
+    const avatar = data.icon;
     const created_at = Date.now();
     const updated_at = Date.now();
-  const [result] = await db.query('INSERT INTO block_apps (child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time]);
-  return result;
+    const query = 'INSERT INTO block_apps (child_id, app_name, created_at, updated_at, package_name, avatar) VALUES (?, ?, ?, ?, ?, ?)'
+    db.query(query, [child_id, app_name, created_at, updated_at, package_name, avatar], (err, result) => {
+      callback(err, result);
+    });
 };
 
 const findAppByPackageName = async (package_name) => {
@@ -27,7 +27,7 @@ const UpdateAppTable = async (apps) => {
 }
 
 module.exports = {
-    createApp,
+    saveApp,
     findAppByPackageName,
     UpdateAppTable
 };
