@@ -88,10 +88,10 @@ io.on('connection', (socket) => {
     io.emit('app-blocked', {
       data
     });
-    socket.on("send-child-data", (data) => {
-      io.emit('receive-child-data', data);
-    })
   });
+  socket.on("send-child-data", (data) => {
+    io.emit('receive-child-data', data);
+  })
 
   socket.on('disconnect', () => {
     console.log('User disconnected');
