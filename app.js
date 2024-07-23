@@ -74,7 +74,7 @@ io.on('connection', (socket) => {
 
   socket.on('block-app', (data) => {
     socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
-    io.emit('app-blocked', {
+    socket.emit('app-blocked', {
       data
     });
   });
