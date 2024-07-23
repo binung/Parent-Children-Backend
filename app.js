@@ -4,6 +4,7 @@ const http = require('http')
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const socketIo = require('socket.io');
+const jwt = require('jsonwebtoken');
 // import {saveApp} from './models/appModel'
 dotenv.config();
 
@@ -72,7 +73,8 @@ io.on('connection', (socket) => {
 
   socket.emit('connection-success', { message: 'Successfully connected to server' });
   socket.on('userinfo', (data) => {
-    socket.emit('userinfo', data)
+    const parentId = jwt.verify(data.token, 'your_jwt_secret_key')
+    socket.emit('userinfo', parentId)
   })
   socket.on('block-app', (data) => {
     socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
