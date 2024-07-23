@@ -14,31 +14,31 @@ connectDB;
 
 // Middleware
 app.use(express.json({ extended: false }));
- 
+
 
 // Custom CORS middleware  
 
 // CORS options for Express API  
-const corsOptions = {  
-  origin:'*',
-  methods: ['GET', 'POST'],  
-  credentials: true,  
-};  
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST'],
+  credentials: true,
+};
 
 // Use CORS middleware  
-app.use(cors(corsOptions));  
+app.use(cors(corsOptions));
 
 // Initialize Socket.IO with CORS options  
-const io = socketIo(server, {  
-  cors: {  
-      origin: '*',  
-      methods: ['GET', 'POST'],  
-      credentials: true,  
-  },  
-});  
+const io = socketIo(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+});
 
 
-app.get('/',(req, res) => {
+app.get('/', (req, res) => {
   res.send("welcome to node server");
 })
 
@@ -78,19 +78,32 @@ io.on('connection', (socket) => {
     // const updated_at = Date.now();
     // const query = 'INSERT INTO block_apps (child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
     // db.query(query, [child_id, app_name, state, created_at, updated_at, package_name, avatar, app_usage_time], (err, result) => {
-      // if (err) {
-        // console.error('Error inserting data:', err);
-        // socket.emit('block-app-response', { status: 'error', message: 'Error saving app blocking information' });
-      // } else {
-        socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
-      // }
+    // if (err) {
+    // console.error('Error inserting data:', err);
+    // socket.emit('block-app-response', { status: 'error', message: 'Error saving app blocking information' });
+    // } else {
+    socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
+    // }
     // });
     io.emit('app-blocked', {
       data
     });
   });
   socket.on("send-child-data", (data) => {
-    io.emit('receive-child-data', data);
+    data.forEach((value, index) => {
+      const { appName, packageName, icon } = value;
+      const created_at = Date.now();
+      const updated_at = Date.now();
+      const query = 'INSERT INTO block_apps (child_id, app_name, created_at, updated_at, package_name, avatar) VALUES (?, ?, ?, ?, ?, ?)';
+      db.query(query, [3, appName, created_at, updated_at, packageName, icon], (err, result) => {
+        if (err) {
+          console.error('Error inserting data:', err);
+          socket.emit('block-app-response', { status: 'error', message: 'Error saving app blocking information' });
+        } else {
+          io.emit('receive-child-data', value.appName);
+        }
+      });
+    })
   })
 
   socket.on('disconnect', () => {
