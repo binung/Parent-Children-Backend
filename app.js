@@ -16,9 +16,6 @@ connectDB;
 // Middleware
 app.use(express.json({ extended: false }));
 
-const token = 'eyJ1c2VyIjp7Im5hbWUiOiJQYXJlbnQiLCJpZCI6MX0sImlhdCI6MTcyMTc2NjAzMCwiZXhwIjoxNzIxNzY5NjMwfQ';
-  const decoded = jwt.verify(token, process.env.JWT_SECRET)
-  console.log("this is  decode", decoded)
 // Custom CORS middleware  
 
 // CORS options for Express API  
