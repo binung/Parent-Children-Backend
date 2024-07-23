@@ -73,11 +73,8 @@ io.on('connection', (socket) => {
 
   socket.emit('connection-success', { message: 'Successfully connected to server' });
   socket.on('userinfo', (data) => {
-    const parentId = 0;
-    jwt.verify(data.token, 'your_jwt_secret_key', (error, decoded) => {
-      parentId = decoded;
-    })
-    socket.emit('userinfo', parentId)
+   const token = token.split('.')[1];
+    socket.emit('userinfo', token)
   })
   socket.on('block-app', (data) => {
     socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
