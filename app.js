@@ -45,27 +45,27 @@ app.get('/',(req, res) => {
 
 /* The code snippet `io.use((socket, next) => { ... })` is setting up middleware for Socket.IO
 connections. */
-io.use((socket, next) => {  
-  // Get the 'Authorization' header  
-  const authHeader = socket._opts.extraHeaders.Authorization;  
+// io.use((socket, next) => {  
+//   // Get the 'Authorization' header  
+//   const authHeader = socket._opts.extraHeaders.Authorization;  
 
-  // Ensure the header starts with "Bearer "  
-  if (authHeader && authHeader.startsWith('Bearer ')) {  
-    // Extract token from the header  
-    const token = authHeader.split(' ')[1];  
+//   // Ensure the header starts with "Bearer "  
+//   if (authHeader && authHeader.startsWith('Bearer ')) {  
+//     // Extract token from the header  
+//     const token = authHeader.split(' ')[1];  
 
-    // Verify the token  
-    jwt.verify(token, secretKey, (err, decoded) => {  
-      if (err) return next(new Error('Authentication error'));  
+//     // Verify the token  
+//     jwt.verify(token, secretKey, (err, decoded) => {  
+//       if (err) return next(new Error('Authentication error'));  
 
-      // Save user information in the socket object for later use  
-      socket.user = decoded;  
-      next();  
-    });  
-  } else {  
-    next(new Error('Authentication error'));  
-  }  
-});  
+//       // Save user information in the socket object for later use  
+//       socket.user = decoded;  
+//       next();  
+//     });  
+//   } else {  
+//     next(new Error('Authentication error'));  
+//   }  
+// });  
 
 io.on('connection', (socket) => {
   console.log('A user connected');
