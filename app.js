@@ -4,7 +4,7 @@ const http = require('http')
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const socketIo = require('socket.io');
-import {saveApp} from './models/appModel'
+// import {saveApp} from './models/appModel'
 dotenv.config();
 
 const app = express();
@@ -79,13 +79,13 @@ io.on('connection', (socket) => {
     });
   });
   socket.on("send-child-data", (data) => {
-    saveApp(data, (err,result) => {
-      if(err) {
-        socket.emit('receive-child-data', {status: 'error', message: 'Error saving app'});
-      } else {
+    // saveApp(data, (err,result) => {
+    //   if(err) {
+    //     socket.emit('receive-child-data', {status: 'error', message: 'Error saving app'});
+    //   } else {
         socket.emit('receive-child-data', {status: 'success', message:'App blocking info'});
-      }
-    })
+      // }
+    // })
   })
 
   socket.on('disconnect', () => {
