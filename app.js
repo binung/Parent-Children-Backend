@@ -92,6 +92,13 @@ io.on('connection', (socket) => {
     // })
   })
 
+  socket.on('send-location', (data) => {
+    console.log('Received location data from kids app:', data);
+
+    // Broadcast the location data to all connected clients
+    io.emit('receive-location', data);
+  });
+
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });
