@@ -77,8 +77,7 @@ io.on('connection', (socket) => {
     socket.emit('userinfo', decoded)
   })
   socket.on('block-app', (data) => {
-    socket.emit('block-app-response', { status: 'success', message: 'App blocking information saved successfully' });
-    socket.emit('app-blocked', {
+    io.emit('app-blocked', {
       data
     });
   });
