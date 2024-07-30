@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const socketIo = require('socket.io');
 const jwt = require('jsonwebtoken');
-// import {saveApp} from './models/appModel'
 dotenv.config();
 
 const app = express();
@@ -68,47 +67,38 @@ connections. */
 // });  
 
 io.on('connection', (socket) => {
-  console.log('A user connected');
-
   socket.emit('connection-success', { message: 'Successfully connected to server' });
+  socket.on('Request-child-app-info', (data) => {
+    io.emit('request-childapp-info', data);
+  })
   socket.on('userinfo', (data) => {
     const token = data.token.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     socket.emit('userinfo', decoded)
   })
+
+
+
   socket.on('block-app', (data) => {
     io.emit('app-blocked', {
       data
     });
   });
+
+  socket.i
   socket.on("send-app-data", (data) => {
-    // saveApp(data, (err,result) => {
-    //   if(err) {
-    //     socket.emit('receive-child-data', {status: 'error', message: 'Error saving app'});
-    //   } else {
     io.emit('receive-child-data', { status: 'receive-appinnfo-success', message: 'App blocking info', data });
-    // }
-    // })
   })
 
   socket.on('send-location', (data) => {
-    console.log('Received location data from kids app:', data);
-
-    // Broadcast the location data to all connected clients
     io.emit('receive-location', data);
   });
 
   socket.on('send-photo', (data) => {
-    console.log('Received photo from kids app:', data);
-
-    // Broadcast the photo data to all connected clients
     io.emit('receive-photo', data);
   });
   
   socket.on('send-screen', (data) => {
-    console.log('Received screen data from kids app:', data);
-
-    // Broadcast the screen data to all connected clients
     io.emit('receive-screen', data);
   });
   
@@ -120,7 +110,6 @@ io.on('connection', (socket) => {
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/app', require('./routes/userRoutes'));
-// app.use('/api/appUsage', require('./routes/appRoutes'));
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
