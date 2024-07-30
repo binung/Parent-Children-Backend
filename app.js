@@ -82,12 +82,12 @@ io.on('connection', (socket) => {
       data
     });
   });
-  socket.on("send-child-data", (data) => {
+  socket.on("send-app-data", (data) => {
     // saveApp(data, (err,result) => {
     //   if(err) {
     //     socket.emit('receive-child-data', {status: 'error', message: 'Error saving app'});
     //   } else {
-    socket.emit('receive-child-data', { status: 'success', message: 'App blocking info' });
+    socket.emit('receive-child-data', { status: 'success', message: 'App blocking info', data });
     // }
     // })
   })
@@ -99,9 +99,24 @@ io.on('connection', (socket) => {
     io.emit('receive-location', data);
   });
 
+  socket.on('send-photo', (data) => {
+    console.log('Received photo from kids app:', data);
+
+    // Broadcast the photo data to all connected clients
+    io.emit('receive-photo', data);
+  });
+  
+  socket.on('send-screen', (data) => {
+    console.log('Received screen data from kids app:', data);
+
+    // Broadcast the screen data to all connected clients
+    io.emit('receive-screen', data);
+  });
+  
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });
+  
 });
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
