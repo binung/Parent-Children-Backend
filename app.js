@@ -87,7 +87,7 @@ io.on('connection', (socket) => {
     //   if(err) {
     //     socket.emit('receive-child-data', {status: 'error', message: 'Error saving app'});
     //   } else {
-    socket.emit('receive-child-data', { status: 'success', message: 'App blocking info', data });
+    io.emit('receive-child-data', { status: 'success', message: 'App blocking info', data });
     // }
     // })
   })
